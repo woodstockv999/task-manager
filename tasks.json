@@ -1,0 +1,274 @@
+{
+  "sections": [
+    {
+      "id": "s1",
+      "title": "Claude活用🐿️",
+      "tasks": [
+        {
+          "id": "t1",
+          "text": "iPhoneウィジェット作成 Claude使用量",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t2",
+          "text": "Claudeプラグイン、いいやつ探す",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t3",
+          "text": "VPS階層の整理、構造最適化 → アプリフォルダ作る",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t4",
+          "text": "Hermes調べる",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t5",
+          "text": "Obsidian調べる",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t6",
+          "text": "Cloudeflare調べる 無料なら使う",
+          "done": false,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t7",
+          "text": "Codexのごまモニター、削除させる",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t8",
+          "text": "ごまモニター、脆弱性修正",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t9",
+          "text": "GitHubの情報整理",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t10",
+          "text": "自動デプロイのcron削除",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t11",
+          "text": "ダイケイモニター、の結果チェックページ作る",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t12",
+          "text": "日経クロステック 解約に向けて",
+          "done": false,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t13",
+          "text": "トリセツ読み込み ラグ開発",
+          "done": false,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t14",
+          "text": "SUUMO系のアプリ",
+          "done": false,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t15",
+          "text": "他のアプリ https化",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t16",
+          "text": "ごまモニター、プロンプトのアウトプットと集計の再紐付け",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t17",
+          "text": "ニュースチェック 要約をかます",
+          "done": false,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t18",
+          "text": "Discordからvps経由でClaude Code動かせない？",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t19",
+          "text": "LINE通話 Discord通知",
+          "done": false,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t20",
+          "text": "EDINET DB活用する",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t21",
+          "text": "スキルスペクターを活用した、スキル評価エージェント構築",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t22",
+          "text": "スキルをコピー導入するエージェント",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t23",
+          "text": "コードレビューエージェント",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t24",
+          "text": "サイトに、エージェント状況・スキル活用状況を管理するページ作成",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "t25",
+          "text": "タスク管理アプリ",
+          "done": true,
+          "createdAt": "2026-06-30T00:00:00Z"
+        },
+        {
+          "id": "t26",
+          "text": "Claudemdアップデート",
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z"
+        },
+        {
+          "id": "mqzu4101szr9",
+          "text": "テスト",
+          "done": true,
+          "createdAt": "2026-06-29T23:14:03.410Z"
+        },
+        {
+          "id": "mqzuw04ft9h8",
+          "text": "テスト",
+          "done": true,
+          "createdAt": "2026-06-29T23:35:48.639Z"
+        },
+        {
+          "id": "mr02ahdwiqo4",
+          "text": "claude-usage-monitor にコスト推移グラフを追加（日/週単位）",
+          "done": true,
+          "createdAt": "2026-06-30T03:03:01.508Z"
+        },
+        {
+          "id": "mr02ahfa2a5n",
+          "text": "スキル一覧・使用頻度を管理ページに可視化",
+          "done": true,
+          "createdAt": "2026-06-30T03:03:01.558Z"
+        },
+        {
+          "id": "mr02ahgmm6hn",
+          "text": "Claudeへのプロンプトをテンプレート管理するアプリ",
+          "done": true,
+          "createdAt": "2026-06-30T03:03:01.606Z"
+        },
+        {
+          "id": "mr17yhozpwbb",
+          "text": "ノート・日記機能追加",
+          "done": true,
+          "createdAt": "2026-06-30T22:29:25.907Z"
+        },
+        {
+          "id": "mr18pko6t7eh",
+          "text": "VP S可視化ツール、再構築",
+          "done": true,
+          "createdAt": "2026-06-30T22:50:29.478Z"
+        }
+      ]
+    },
+    {
+      "id": "mr02aalkrd9k",
+      "title": "VPS/インフラ🖥️",
+      "tasks": [
+        {
+          "id": "mr02ahi3g826",
+          "text": "VPSのCPU/メモリ/ディスク監視 → Discordアラー",
+          "done": false,
+          "createdAt": "2026-06-30T03:03:01.659Z"
+        },
+        {
+          "id": "mr02ahj5d8bf",
+          "text": "全アプリのログを一元確認できるページ作る",
+          "done": true,
+          "createdAt": "2026-06-30T03:03:01.697Z"
+        },
+        {
+          "id": "mr02ahkkzfhn",
+          "text": "定期バックアップ（データファイル・nginx設定など）を自動化",
+          "done": true,
+          "createdAt": "2026-06-30T03:03:01.748Z"
+        }
+      ]
+    },
+    {
+      "id": "mr02aao3psvk",
+      "title": "既存アプリ発展🔧",
+      "tasks": [
+        {
+          "id": "mr02ahn3auni",
+          "text": "goma-monitor の誤判定を減らす（精度改善）",
+          "done": true,
+          "createdAt": "2026-06-30T03:03:01.839Z"
+        },
+        {
+          "id": "mr02aho7atyf",
+          "text": "marumie-jp（EDINET）にデータ更新通知を追加",
+          "done": false,
+          "createdAt": "2026-06-30T03:03:01.879Z"
+        },
+        {
+          "id": "mr02ahparlor",
+          "text": "briefing-bot の現状整理・稼働確認",
+          "done": true,
+          "createdAt": "2026-06-30T03:03:01.918Z"
+        }
+      ]
+    },
+    {
+      "id": "mr02aapb46bx",
+      "title": "新規アプリ🆕",
+      "tasks": [
+        {
+          "id": "mr02ahqt2wzx",
+          "text": "家計・支出トラッカー（不動産コスト管理）",
+          "done": false,
+          "createdAt": "2026-06-30T03:03:01.973Z"
+        },
+        {
+          "id": "mr02ahryejkw",
+          "text": "Obsidian ↔ VPS 連携（メモを自動同期・インデックス化）",
+          "done": true,
+          "createdAt": "2026-06-30T03:03:02.014Z"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="theme-color" content="#08090c"/>
+  <title>Tasks — w00dst0ck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:      #08090c;
+      --surface: #0f1116;
+      --card:    #12141c;
+      --border:  #1c1f2e;
+      --border2: #252838;
+      --text:    #dde0f0;
+      --muted:   #858ab0;
+      --dim:     #515573;
+      --accent:  #d4a030;
+      --teal:    #30c8a8;
+      --coral:   #e06858;
+      --green:   #38c078;
+      --amber:   #e8b840;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+    body {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      padding: 44px 20px 80px;
+      padding-top: max(44px, env(safe-area-inset-top));
+      padding-bottom: max(80px, env(safe-area-inset-bottom));
+    }
+    .wrap { width: 100%; max-width: 640px; margin: 0 auto; }
+
+    /* Header */
+    .hd {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .hd-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .02em;
+      padding: 4px 0;
+      transition: color .15s;
+    }
+    .hd-back:hover { color: var(--text); }
+    .hd-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      color: var(--text);
+    }
+    .hd-subtitle {
+      font-size: 12px;
+      color: var(--dim);
+      margin-bottom: 28px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Global progress */
+    .global-progress {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .gp-label { font-size: 12px; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; flex: 1; }
+    .gp-count { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--teal); font-weight: 500; }
+    .gp-bar-wrap { width: 100%; height: 4px; background: var(--border2); border-radius: 2px; margin-top: 8px; }
+    .gp-bar { height: 4px; background: var(--teal); border-radius: 2px; transition: width .4s ease; }
+
+    /* Section */
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-title-wrap { flex: 1; min-width: 0; }
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+      font: inherit;
+      width: 100%;
+      padding: 0;
+      text-align: left;
+      outline: none;
+    }
+    .section-title:focus { color: var(--accent); }
+    .section-prog {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--dim);
+      margin-top: 2px;
+    }
+    .section-prog-bar { height: 2px; background: var(--border2); border-radius: 1px; margin-top: 6px; }
+    .section-prog-fill { height: 2px; background: var(--green); border-radius: 1px; transition: width .3s; }
+    .btn-del-section {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--dim);
+      padding: 4px;
+      line-height: 1;
+      border-radius: 4px;
+      transition: color .15s, background .15s;
+      flex-shrink: 0;
+    }
+    .btn-del-section:hover { color: var(--coral); background: rgba(224,104,88,.1); }
+
+    /* Task list */
+    .task-list { list-style: none; }
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 16px;
+      border-bottom: 1px solid var(--border);
+      transition: background .1s;
+    }
+    .task-item:last-child { border-bottom: none; }
+    .task-item:hover { background: rgba(255,255,255,.02); }
+
+    .task-cb {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      accent-color: var(--teal);
+      cursor: pointer;
+    }
+    .task-text {
+      flex: 1;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text);
+      cursor: pointer;
+      word-break: break-word;
+      outline: none;
+      border: none;
+      background: none;
+      font: inherit;
+      padding: 0;
+      text-align: left;
+      width: 100%;
+      resize: none;
+      overflow: hidden;
+    }
+    .task-text:focus {
+      color: var(--accent);
+      outline: none;
+    }
+    .task-item.done .task-text {
+      color: var(--dim);
+      text-decoration: line-through;
+    }
+    .btn-del {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--dim);
+      padding: 2px 4px;
+      line-height: 1;
+      border-radius: 4px;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity .15s, color .15s, background .15s;
+      flex-shrink: 0;
+    }
+    .task-item:hover .btn-del { opacity: 1; }
+    .btn-del:hover { color: var(--coral); background: rgba(224,104,88,.1); }
+
+    /* Add task row */
+    .add-task-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px 10px;
+    }
+    .add-task-input {
+      flex: 1;
+      background: none;
+      border: none;
+      border-bottom: 1px solid var(--border2);
+      color: var(--muted);
+      font: inherit;
+      font-size: 16px;
+      padding: 4px 0;
+      outline: none;
+      transition: border-color .15s, color .15s;
+    }
+    .add-task-input::placeholder { color: var(--dim); }
+    .add-task-input:focus { border-color: var(--accent); color: var(--text); }
+    .btn-add-task {
+      background: none;
+      border: 1px solid var(--border2);
+      color: var(--muted);
+      font: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: border-color .15s, color .15s, background .15s;
+    }
+    .btn-add-task:hover { border-color: var(--teal); color: var(--teal); background: rgba(48,200,168,.07); }
+
+    /* Add section */
+    .add-section {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .add-section-input {
+      flex: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font: inherit;
+      font-size: 16px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .add-section-input::placeholder { color: var(--dim); }
+    .add-section-input:focus { border-color: var(--accent); }
+    .btn-add-section {
+      background: rgba(212,160,48,.12);
+      border: 1px solid rgba(212,160,48,.3);
+      color: var(--accent);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+      white-space: nowrap;
+    }
+    .btn-add-section:hover { background: rgba(212,160,48,.2); }
+
+    /* Open/Done divider */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 24px 0 0;
+      color: var(--dim);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      user-select: none;
+      padding: 6px 0;
+      transition: color .15s;
+    }
+    .section-divider:hover { color: var(--muted); }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .done-sections { overflow: hidden; }
+    .done-sections.collapsed { display: none; }
+
+    /* Loading / empty */
+    .loading { color: var(--dim); font-size: 13px; padding: 20px 0; text-align: center; }
+    .empty-tasks { color: var(--dim); font-size: 12px; padding: 10px 16px 6px; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: max(24px, env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 20px;
+      opacity: 0;
+      transition: opacity .2s, transform .2s;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 100;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/" class="hd-back">← w00dst0ck/tools</a>
+  <div class="hd">
+    <span class="hd-title">Tasks</span>
+  </div>
+  <div class="hd-subtitle">Claudeへの依頼メモ</div>
+
+  <div class="global-progress" id="gp">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span class="gp-label">Total Progress</span>
+        <span class="gp-count" id="gp-count">— / —</span>
+      </div>
+      <div class="gp-bar-wrap"><div class="gp-bar" id="gp-bar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div id="sections-container">
+    <div class="loading">読み込み中…</div>
+  </div>
+
+  <div class="add-section">
+    <input class="add-section-input" id="new-section-input" type="text" placeholder="新しいセクションを追加…" maxlength="80"/>
+    <button class="btn-add-section" id="btn-new-section">+ セクション</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let data = { sections: [] };
+
+async function load() {
+  const r = await fetch('api/tasks');
+  data = await r.json();
+  render();
+}
+
+function render() {
+  const c = document.getElementById('sections-container');
+  c.innerHTML = '';
+
+  const totalTasks = data.sections.reduce((s, sec) => s + sec.tasks.length, 0);
+  const doneTasks  = data.sections.reduce((s, sec) => s + sec.tasks.filter(t => t.done).length, 0);
+  document.getElementById('gp-count').textContent = `${doneTasks} / ${totalTasks}`;
+  document.getElementById('gp-bar').style.width = totalTasks ? `${Math.round(doneTasks / totalTasks * 100)}%` : '0%';
+
+  // オープンタスクがあるセクションを上に
+  for (const sec of data.sections) {
+    if (sec.tasks.some(t => !t.done)) c.appendChild(renderSection(sec, 'open'));
+  }
+
+  // 完了済みセクション（デフォルト折りたたみ）
+  const doneCount = data.sections.reduce((s, sec) => s + sec.tasks.filter(t => t.done).length, 0);
+  const doneWrap  = document.createElement('div');
+  doneWrap.className = 'done-sections collapsed';
+
+  for (const sec of data.sections) {
+    if (sec.tasks.some(t => t.done)) doneWrap.appendChild(renderSection(sec, 'done'));
+  }
+
+  const divider = document.createElement('div');
+  divider.className = 'section-divider';
+  divider.innerHTML = `<span>▶ 完了済み（${doneCount}件）</span>`;
+  divider.addEventListener('click', () => {
+    const collapsed = doneWrap.classList.toggle('collapsed');
+    divider.querySelector('span').textContent = `${collapsed ? '▶' : '▼'} 完了済み（${doneCount}件）`;
+    if (!collapsed) requestAnimationFrame(() => doneWrap.querySelectorAll('.task-text').forEach(autoResize));
+  });
+  c.appendChild(divider);
+  c.appendChild(doneWrap);
+
+  requestAnimationFrame(initTextareas);
+}
+
+function renderSection(sec, mode = 'open') {
+  const done  = sec.tasks.filter(t => t.done).length;
+  const total = sec.tasks.length;
+  const pct   = total ? Math.round(done / total * 100) : 0;
+
+  const filteredTasks = sec.tasks.filter(t => mode === 'open' ? !t.done : t.done);
+
+  const el = document.createElement('div');
+  el.className = 'section';
+  el.dataset.id = sec.id;
+  el.dataset.mode = mode;
+
+  el.innerHTML = `
+    <div class="section-head">
+      <div class="section-title-wrap">
+        <input class="section-title" type="text" value="${esc(sec.title)}" data-sec-id="${sec.id}" maxlength="80"/>
+        <div class="section-prog">${done} / ${total} 完了 (${pct}%)</div>
+        <div class="section-prog-bar"><div class="section-prog-fill" style="width:${pct}%"></div></div>
+      </div>
+      ${mode === 'open' ? `<button class="btn-del-section" data-sec-id="${sec.id}" title="セクション削除">✕</button>` : ''}
+    </div>
+    <ul class="task-list" id="tl-${sec.id}-${mode}">
+      ${filteredTasks.length === 0 ? '<li class="empty-tasks">タスクなし</li>' : filteredTasks.map(t => renderTaskHTML(t)).join('')}
+    </ul>
+    ${mode === 'open' ? `
+    <div class="add-task-row">
+      <input class="add-task-input" type="text" placeholder="タスクを追加…" data-sec-id="${sec.id}" maxlength="200"/>
+      <button class="btn-add-task" data-sec-id="${sec.id}">追加</button>
+    </div>` : ''}
+  `;
+
+  // Section title rename
+  el.querySelector('.section-title').addEventListener('change', async e => {
+    const val = e.target.value.trim();
+    if (!val) { e.target.value = sec.title; return; }
+    await fetch(`api/sections/${sec.id}`, {
+      method: 'PUT', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: val })
+    });
+    sec.title = val;
+    toast('セクション名更新');
+  });
+
+  // Delete section (open mode only)
+  el.querySelector('.btn-del-section')?.addEventListener('click', async () => {
+    if (!confirm(`「${sec.title}」を削除しますか？`)) return;
+    await fetch(`api/sections/${sec.id}`, { method: 'DELETE' });
+    data.sections = data.sections.filter(s => s.id !== sec.id);
+    render();
+    toast('削除しました');
+  });
+
+  // Add task on Enter or button (open mode only)
+  const addInput = el.querySelector('.add-task-input');
+  const addBtn   = el.querySelector('.btn-add-task');
+  const doAdd = async () => {
+    const text = addInput.value.trim();
+    if (!text) return;
+    addInput.value = '';
+    const r = await fetch('api/tasks', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sectionId: sec.id, text })
+    });
+    const task = await r.json();
+    sec.tasks.push(task);
+    render();
+    toast('追加しました');
+  };
+  addInput?.addEventListener('keydown', e => { if (e.key === 'Enter') doAdd(); });
+  addBtn?.addEventListener('click', doAdd);
+
+  return el;
+}
+
+function renderTaskHTML(t) {
+  return `
+    <li class="task-item${t.done ? ' done' : ''}" data-id="${t.id}">
+      <input type="checkbox" class="task-cb" ${t.done ? 'checked' : ''} data-id="${t.id}"/>
+      <textarea class="task-text" data-id="${t.id}" maxlength="200" rows="1">${esc(t.text)}</textarea>
+      <button class="btn-del" data-id="${t.id}" title="削除">✕</button>
+    </li>
+  `;
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
+function initTextareas() {
+  document.querySelectorAll('.task-text').forEach(el => {
+    if (el.offsetParent !== null) autoResize(el);
+  });
+}
+
+document.getElementById('sections-container').addEventListener('input', e => {
+  if (e.target.classList.contains('task-text')) autoResize(e.target);
+});
+
+// Event delegation on sections container
+document.getElementById('sections-container').addEventListener('change', async e => {
+  if (!e.target.classList.contains('task-cb')) return;
+  const id = e.target.dataset.id;
+  const done = e.target.checked;
+  await fetch(`api/tasks/${id}`, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ done })
+  });
+  for (const s of data.sections) {
+    const t = s.tasks.find(t => t.id === id);
+    if (t) { t.done = done; break; }
+  }
+  render();
+});
+
+document.getElementById('sections-container').addEventListener('change', async e => {
+  if (!e.target.classList.contains('task-text')) return;
+  const id = e.target.dataset.id;
+  const text = e.target.value.trim();
+  if (!text) { load(); return; }
+  await fetch(`api/tasks/${id}`, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text })
+  });
+  for (const s of data.sections) {
+    const t = s.tasks.find(t => t.id === id);
+    if (t) { t.text = text; break; }
+  }
+  toast('更新しました');
+});
+
+document.getElementById('sections-container').addEventListener('click', async e => {
+  if (!e.target.classList.contains('btn-del')) return;
+  const id = e.target.dataset.id;
+  await fetch(`api/tasks/${id}`, { method: 'DELETE' });
+  for (const s of data.sections) {
+    s.tasks = s.tasks.filter(t => t.id !== id);
+  }
+  render();
+  toast('削除しました');
+});
+
+// Add section
+document.getElementById('btn-new-section').addEventListener('click', addSection);
+document.getElementById('new-section-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addSection();
+});
+async function addSection() {
+  const input = document.getElementById('new-section-input');
+  const title = input.value.trim();
+  if (!title) return;
+  input.value = '';
+  const r = await fetch('api/sections', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title })
+  });
+  const sec = await r.json();
+  data.sections.push(sec);
+  render();
+  toast('セクション追加');
+}
+
+function esc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+load();
+</script>
+</body>
+</html>
