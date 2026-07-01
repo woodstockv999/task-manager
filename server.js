@@ -26,7 +26,7 @@ app.get('/api/tasks', (req, res) => res.json(read()));
 
 app.post('/api/tasks', (req, res) => {
   const { sectionId, text } = req.body;
-  if (!text?.trim()) return res.status(400).json({ error: 'text required' });
+  if (typeof text !== 'string' || !text.trim()) return res.status(400).json({ error: 'text required' });
   const data = read();
   const section = data.sections.find(s => s.id === sectionId);
   if (!section) return res.status(404).json({ error: 'section not found' });
@@ -42,7 +42,10 @@ app.put('/api/tasks/:id', (req, res) => {
     const t = s.tasks.find(t => t.id === req.params.id);
     if (t) {
       if (req.body.done !== undefined) t.done = req.body.done;
-      if (req.body.text !== undefined) t.text = req.body.text.trim();
+      if (req.body.text !== undefined) {
+        if (typeof req.body.text !== 'string' || !req.body.text.trim()) return res.status(400).json({ error: 'text required' });
+        t.text = req.body.text.trim();
+      }
       write(data);
       return res.json(t);
     }
@@ -65,7 +68,7 @@ app.delete('/api/tasks/:id', (req, res) => {
 
 app.post('/api/sections', (req, res) => {
   const { title } = req.body;
-  if (!title?.trim()) return res.status(400).json({ error: 'title required' });
+  if (typeof title !== 'string' || !title.trim()) return res.status(400).json({ error: 'title required' });
   const data = read();
   const section = { id: uid(), title: title.trim(), tasks: [] };
   data.sections.push(section);
@@ -77,7 +80,10 @@ app.put('/api/sections/:id', (req, res) => {
   const data = read();
   const s = data.sections.find(s => s.id === req.params.id);
   if (!s) return res.status(404).json({ error: 'not found' });
-  if (req.body.title !== undefined) s.title = req.body.title.trim();
+  if (req.body.title !== undefined) {
+    if (typeof req.body.title !== 'string' || !req.body.title.trim()) return res.status(400).json({ error: 'title required' });
+    s.title = req.body.title.trim();
+  }
   write(data);
   res.json(s);
 });
@@ -89,6 +95,11 @@ app.delete('/api/sections/:id', (req, res) => {
   data.sections.splice(i, 1);
   write(data);
   res.json({ ok: true });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: 'internal error' });
 });
 
 app.listen(PORT, '127.0.0.1', () => console.log(`task-manager :${PORT}`));
