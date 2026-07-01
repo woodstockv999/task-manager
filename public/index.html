@@ -187,12 +187,14 @@
       line-height: 1;
       border-radius: 4px;
       font-size: 12px;
-      opacity: 0;
       transition: opacity .15s, color .15s, background .15s;
       flex-shrink: 0;
     }
-    .task-item:hover .btn-del { opacity: 1; }
     .btn-del:hover { color: var(--coral); background: rgba(224,104,88,.1); }
+    @media (hover: hover) and (pointer: fine) {
+      .btn-del { opacity: 0; }
+      .task-item:hover .btn-del { opacity: 1; }
+    }
 
     .btn-detail-toggle {
       background: none;
