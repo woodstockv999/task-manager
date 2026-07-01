@@ -606,6 +606,8 @@ document.getElementById('sections-container').addEventListener('change', async e
 document.getElementById('sections-container').addEventListener('click', async e => {
   if (!e.target.classList.contains('btn-del')) return;
   const id = e.target.dataset.id;
+  const task = data.sections.flatMap(s => s.tasks).find(t => t.id === id);
+  if (!confirm(`「${task ? task.text : 'このタスク'}」を削除しますか？`)) return;
   await fetch(`api/tasks/${id}`, { method: 'DELETE' });
   for (const s of data.sections) {
     s.tasks = s.tasks.filter(t => t.id !== id);
