@@ -25,12 +25,13 @@ function uid() {
 app.get('/api/tasks', (req, res) => res.json(read()));
 
 app.post('/api/tasks', (req, res) => {
-  const { sectionId, text } = req.body;
+  const { sectionId, text, detail } = req.body;
   if (typeof text !== 'string' || !text.trim()) return res.status(400).json({ error: 'text required' });
+  if (detail !== undefined && typeof detail !== 'string') return res.status(400).json({ error: 'detail must be string' });
   const data = read();
   const section = data.sections.find(s => s.id === sectionId);
   if (!section) return res.status(404).json({ error: 'section not found' });
-  const task = { id: uid(), text: text.trim(), done: false, createdAt: new Date().toISOString() };
+  const task = { id: uid(), text: text.trim(), detail: (detail || '').trim(), done: false, createdAt: new Date().toISOString() };
   section.tasks.push(task);
   write(data);
   res.json(task);
@@ -45,6 +46,10 @@ app.put('/api/tasks/:id', (req, res) => {
       if (req.body.text !== undefined) {
         if (typeof req.body.text !== 'string' || !req.body.text.trim()) return res.status(400).json({ error: 'text required' });
         t.text = req.body.text.trim();
+      }
+      if (req.body.detail !== undefined) {
+        if (typeof req.body.detail !== 'string') return res.status(400).json({ error: 'detail must be string' });
+        t.detail = req.body.detail;
       }
       write(data);
       return res.json(t);

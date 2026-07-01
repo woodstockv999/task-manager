@@ -133,15 +133,17 @@
     /* Task list */
     .task-list { list-style: none; }
     .task-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 9px 16px;
       border-bottom: 1px solid var(--border);
       transition: background .1s;
     }
     .task-item:last-child { border-bottom: none; }
     .task-item:hover { background: rgba(255,255,255,.02); }
+    .task-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 16px;
+    }
 
     .task-cb {
       width: 16px;
@@ -191,6 +193,42 @@
     }
     .task-item:hover .btn-del { opacity: 1; }
     .btn-del:hover { color: var(--coral); background: rgba(224,104,88,.1); }
+
+    .btn-detail-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--dim);
+      padding: 2px 6px;
+      line-height: 1.5;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: color .15s, background .15s;
+    }
+    .btn-detail-toggle:hover { color: var(--teal); background: rgba(48,200,168,.08); }
+    .btn-detail-toggle.has-detail { color: var(--teal); }
+    .task-detail-wrap { padding: 0 16px 10px 42px; }
+    .task-detail-wrap.collapsed { display: none; }
+    .task-detail {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      color: var(--muted);
+      font: inherit;
+      font-size: 12.5px;
+      line-height: 1.65;
+      padding: 8px 10px;
+      border-radius: 6px;
+      outline: none;
+      resize: vertical;
+      min-height: 54px;
+      transition: border-color .15s, color .15s;
+    }
+    .task-detail::placeholder { color: var(--dim); }
+    .task-detail:focus { color: var(--text); border-color: var(--accent); }
 
     /* Add task row */
     .add-task-row {
@@ -467,11 +505,18 @@ function renderSection(sec, mode = 'open') {
 }
 
 function renderTaskHTML(t) {
+  const hasDetail = !!(t.detail && t.detail.trim());
   return `
     <li class="task-item${t.done ? ' done' : ''}" data-id="${t.id}">
-      <input type="checkbox" class="task-cb" ${t.done ? 'checked' : ''} data-id="${t.id}"/>
-      <textarea class="task-text" data-id="${t.id}" maxlength="200" rows="1">${esc(t.text)}</textarea>
-      <button class="btn-del" data-id="${t.id}" title="削除">✕</button>
+      <div class="task-row">
+        <input type="checkbox" class="task-cb" ${t.done ? 'checked' : ''} data-id="${t.id}"/>
+        <textarea class="task-text" data-id="${t.id}" maxlength="200" rows="1">${esc(t.text)}</textarea>
+        <button class="btn-detail-toggle${hasDetail ? ' has-detail' : ''}" data-id="${t.id}" title="詳細">${hasDetail ? '📝' : '＋詳細'}</button>
+        <button class="btn-del" data-id="${t.id}" title="削除">✕</button>
+      </div>
+      <div class="task-detail-wrap collapsed" data-id="${t.id}">
+        <textarea class="task-detail" data-id="${t.id}" maxlength="4000" placeholder="詳細を書く…">${esc(t.detail || '')}</textarea>
+      </div>
     </li>
   `;
 }
@@ -485,10 +530,45 @@ function initTextareas() {
   document.querySelectorAll('.task-text').forEach(el => {
     if (el.offsetParent !== null) autoResize(el);
   });
+  document.querySelectorAll('.task-detail-wrap:not(.collapsed) .task-detail').forEach(autoResize);
 }
 
 document.getElementById('sections-container').addEventListener('input', e => {
-  if (e.target.classList.contains('task-text')) autoResize(e.target);
+  if (e.target.classList.contains('task-text') || e.target.classList.contains('task-detail')) autoResize(e.target);
+});
+
+document.getElementById('sections-container').addEventListener('click', e => {
+  if (!e.target.classList.contains('btn-detail-toggle')) return;
+  const id = e.target.dataset.id;
+  const wrap = document.querySelector(`.task-detail-wrap[data-id="${id}"]`);
+  if (!wrap) return;
+  const collapsed = wrap.classList.toggle('collapsed');
+  if (!collapsed) {
+    const ta = wrap.querySelector('.task-detail');
+    autoResize(ta);
+    ta.focus();
+  }
+});
+
+document.getElementById('sections-container').addEventListener('change', async e => {
+  if (!e.target.classList.contains('task-detail')) return;
+  const id = e.target.dataset.id;
+  const detail = e.target.value;
+  await fetch(`api/tasks/${id}`, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ detail })
+  });
+  for (const s of data.sections) {
+    const t = s.tasks.find(t => t.id === id);
+    if (t) { t.detail = detail; break; }
+  }
+  const btn = document.querySelector(`.btn-detail-toggle[data-id="${id}"]`);
+  if (btn) {
+    const hasDetail = !!detail.trim();
+    btn.classList.toggle('has-detail', hasDetail);
+    btn.textContent = hasDetail ? '📝' : '＋詳細';
+  }
+  toast('詳細を更新しました');
 });
 
 // Event delegation on sections container
