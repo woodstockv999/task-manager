@@ -31,44 +31,36 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100dvh;
-      padding: 44px 20px 80px;
-      padding-top: max(44px, env(safe-area-inset-top));
+    }
+    .wrap {
+      width: 100%; max-width: 640px; margin: 0 auto;
+      padding: 32px 20px 80px;
       padding-bottom: max(80px, env(safe-area-inset-bottom));
     }
-    .wrap { width: 100%; max-width: 640px; margin: 0 auto; }
 
-    /* Header */
-    .hd {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
+    /* 階層パンくず（ポータル › アプリ名。BASEと同じ構成） */
+    .crumb-bar {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; gap: 6px;
+      padding: 14px 24px;
+      padding-top: max(14px, env(safe-area-inset-top));
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      font-size: .82rem;
+      flex-wrap: wrap;
     }
-    .hd-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: .02em;
-      padding: 4px 0;
-      transition: color .15s;
+    .crumb {
+      display: flex; align-items: center; gap: 6px;
+      color: var(--muted); text-decoration: none;
+      padding: 4px 8px; border-radius: 7px;
+      transition: background .12s, color .12s;
+      background: none; border: none; font: inherit; cursor: pointer;
     }
-    .hd-back:hover { color: var(--text); }
-    .hd-title {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -.02em;
-      color: var(--text);
-    }
-    .hd-subtitle {
-      font-size: 12px;
-      color: var(--dim);
-      margin-bottom: 28px;
-      font-family: 'JetBrains Mono', monospace;
-    }
+    .crumb:hover { background: var(--card); color: var(--text); }
+    .crumb.current { color: var(--text); font-weight: 600; cursor: default; }
+    .crumb.current:hover { background: none; }
+    .crumb-sep { color: var(--dim); font-size: .75rem; }
+    .crumb-spacer { flex: 1; }
 
     /* Global progress */
     .global-progress {
@@ -326,13 +318,13 @@
   </style>
 </head>
 <body>
+<div class="crumb-bar">
+  <a class="crumb" href="/" title="アプリ一覧へ戻る">🏠 ポータル</a>
+  <span class="crumb-sep">›</span>
+  <span class="crumb current">✅ STACK</span>
+  <span class="crumb-spacer"></span>
+</div>
 <div class="wrap">
-  <a href="/" class="hd-back">← w00dst0ck/tools</a>
-  <div class="hd">
-    <span class="hd-title">Tasks</span>
-  </div>
-  <div class="hd-subtitle">Claudeへの依頼メモ</div>
-
   <div class="global-progress" id="gp">
     <div style="flex:1">
       <div style="display:flex;align-items:center;justify-content:space-between">
