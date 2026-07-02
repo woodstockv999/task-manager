@@ -78,6 +78,57 @@
     .gp-bar-wrap { width: 100%; height: 4px; background: var(--border2); border-radius: 2px; margin-top: 8px; }
     .gp-bar { height: 4px; background: var(--teal); border-radius: 2px; transition: width .4s ease; }
 
+    /* AI秘書 */
+    .ai-suggest {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    }
+    .ai-suggest-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ai-suggest-label { font-size: 12px; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; flex: 1; }
+    .btn-ai-suggest {
+      background: rgba(48,200,168,.12);
+      border: 1px solid rgba(48,200,168,.3);
+      color: var(--teal);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+      white-space: nowrap;
+    }
+    .btn-ai-suggest:hover:not(:disabled) { background: rgba(48,200,168,.2); }
+    .btn-ai-suggest:disabled { opacity: .5; cursor: default; }
+    .ai-suggest-result { margin-top: 14px; }
+    .ai-suggest-item {
+      display: flex;
+      gap: 10px;
+      padding: 10px 0;
+      border-top: 1px solid var(--border);
+    }
+    .ai-suggest-item:first-child { border-top: none; }
+    .ai-suggest-rank {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 600;
+      flex-shrink: 0;
+      width: 18px;
+    }
+    .ai-suggest-text { font-size: 15px; color: var(--text); }
+    .ai-suggest-meta { font-size: 11px; color: var(--dim); margin-top: 2px; }
+    .ai-suggest-reason { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .ai-suggest-empty, .ai-suggest-error { font-size: 12px; color: var(--dim); margin-top: 12px; }
+    .ai-suggest-error { color: var(--coral); }
+
     /* Section */
     .section {
       background: var(--card);
@@ -375,6 +426,14 @@
     </div>
   </div>
 
+  <div class="ai-suggest" id="ai-suggest">
+    <div class="ai-suggest-head">
+      <span class="ai-suggest-label">AI秘書</span>
+      <button class="btn-ai-suggest" id="btn-ai-suggest">🤖 今日やること3つ</button>
+    </div>
+    <div class="ai-suggest-result" id="ai-suggest-result"></div>
+  </div>
+
   <div id="sections-container">
     <div class="loading">読み込み中…</div>
   </div>
@@ -637,6 +696,40 @@ async function addSection() {
   render();
   toast('セクション追加');
 }
+
+// AI秘書: 今日やること3つ
+document.getElementById('btn-ai-suggest').addEventListener('click', async () => {
+  const btn = document.getElementById('btn-ai-suggest');
+  const result = document.getElementById('ai-suggest-result');
+  btn.disabled = true;
+  btn.textContent = '考え中…';
+  result.innerHTML = '';
+  try {
+    const r = await fetch('api/suggest', { method: 'POST' });
+    const json = await r.json();
+    if (!r.ok) {
+      result.innerHTML = `<div class="ai-suggest-error">${esc(json.error || '提案の取得に失敗しました')}</div>`;
+    } else if (!json.suggestions || json.suggestions.length === 0) {
+      result.innerHTML = `<div class="ai-suggest-empty">未完了タスクがありません🎉</div>`;
+    } else {
+      result.innerHTML = json.suggestions.map((s, i) => `
+        <div class="ai-suggest-item">
+          <span class="ai-suggest-rank">${i + 1}</span>
+          <div>
+            <div class="ai-suggest-text">${esc(s.text)}</div>
+            <div class="ai-suggest-meta">${esc(s.sectionTitle)}</div>
+            ${s.reason ? `<div class="ai-suggest-reason">${esc(s.reason)}</div>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+  } catch {
+    result.innerHTML = `<div class="ai-suggest-error">通信に失敗しました</div>`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🤖 今日やること3つ';
+  }
+});
 
 function esc(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');

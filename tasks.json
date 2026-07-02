@@ -37,8 +37,9 @@
         {
           "id": "t6",
           "text": "Cloudeflare調べる 無料なら使う",
-          "done": false,
-          "createdAt": "2026-06-01T00:00:00Z"
+          "done": true,
+          "createdAt": "2026-06-01T00:00:00Z",
+          "detail": "導入済みを確認（2026-07-02）: goma-monitor.comのNSはCloudflare、Aレコードはプロキシ有効（104.21.x/172.67.x）、レスポンスにcf-rayヘッダあり。無料プランのDNS+CDNプロキシ構成で稼働中。cloudflaredトンネルは未使用。"
         },
         {
           "id": "t7",
@@ -71,16 +72,11 @@
           "createdAt": "2026-06-01T00:00:00Z"
         },
         {
-          "id": "t12",
-          "text": "日経クロステック 解約に向けて",
-          "done": false,
-          "createdAt": "2026-06-01T00:00:00Z"
-        },
-        {
           "id": "t13",
           "text": "トリセツ読み込み ラグ開発",
           "done": false,
-          "createdAt": "2026-06-01T00:00:00Z"
+          "createdAt": "2026-06-01T00:00:00Z",
+          "detail": "diaryアプリのRAG検索（embedding＋コサイン類似度＋haiku要約）が完成したため、その実装をほぼ流用できる。トリセツPDF/テキストの読み込み→チャンク分割→embedding→検索の流れで再着手するのが最も安い。"
         },
         {
           "id": "t14",
@@ -103,7 +99,7 @@
         {
           "id": "t17",
           "text": "ニュースチェック 要約をかます",
-          "done": false,
+          "done": true,
           "createdAt": "2026-06-01T00:00:00Z"
         },
         {
@@ -115,7 +111,7 @@
         {
           "id": "t19",
           "text": "LINE通話 Discord通知",
-          "done": false,
+          "done": true,
           "createdAt": "2026-06-01T00:00:00Z"
         },
         {
@@ -201,6 +197,27 @@
           "text": "VP S可視化ツール、再構築",
           "done": true,
           "createdAt": "2026-06-30T22:50:29.478Z"
+        },
+        {
+          "id": "mr274gi935l1",
+          "text": "メモリー機能構築",
+          "detail": "実質完了: MEMORY.md＋auto-memory、memory-dreamスキル、毎日4:17のdream cronが既に稼働している（2026-07-02確認）。",
+          "done": true,
+          "createdAt": "2026-07-01T14:53:50.865Z"
+        },
+        {
+          "id": "mr2tr2gk65ip",
+          "text": "使用量モニター、モデル別で出せるか？",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T01:27:17.300Z"
+        },
+        {
+          "id": "mr3kdjn465ur",
+          "text": "フェイブルによるデザイン再設計",
+          "detail": "",
+          "done": false,
+          "createdAt": "2026-07-02T13:52:36.016Z"
         }
       ]
     },
@@ -211,7 +228,7 @@
         {
           "id": "mr02ahi3g826",
           "text": "VPSのCPU/メモリ/ディスク監視 → Discordアラー",
-          "done": false,
+          "done": true,
           "createdAt": "2026-06-30T03:03:01.659Z"
         },
         {
@@ -225,6 +242,48 @@
           "text": "定期バックアップ（データファイル・nginx設定など）を自動化",
           "done": true,
           "createdAt": "2026-06-30T03:03:01.748Z"
+        },
+        {
+          "id": "mr2oqsysr9j2",
+          "text": "バックアップのリストア試験",
+          "detail": "毎日2:00のGitHub push（vps-backupリポジトリ）は成功しているが、復元は一度も検証していない。ローカルか別環境に clone し、tasks.json・nginx設定・pm2構成などから実際にアプリを復旧できるか一度通しで試す。不足ファイル（.envなど意図的にgitignoreしているもの）の別途保管方法もこのとき決める。",
+          "done": false,
+          "createdAt": "2026-07-01T23:07:06.916Z"
+        },
+        {
+          "id": "mr3ief88xnfe",
+          "text": "agent-dashboardの再起動多発(↺16 uptime69秒)原因調査",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T12:57:17.720Z"
+        },
+        {
+          "id": "mr3iefc1i2oy",
+          "text": "claude-usage-monitorの再起動多発(↺11 90分)原因調査",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T12:57:17.857Z"
+        },
+        {
+          "id": "mr3iefcng3kx",
+          "text": "tmux-discordの再起動(↺7 4時間)原因確認",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T12:57:17.879Z"
+        },
+        {
+          "id": "mr3iefdapjhe",
+          "text": "全アプリのpm2再起動回数を定期チェックしてDiscordアラート化",
+          "detail": "",
+          "done": false,
+          "createdAt": "2026-07-02T12:57:17.902Z"
+        },
+        {
+          "id": "mr3iefdtbg6r",
+          "text": "daikei_check自動実行のNode20 deprecation警告対応",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T12:57:17.921Z"
         }
       ]
     },
@@ -241,7 +300,7 @@
         {
           "id": "mr02aho7atyf",
           "text": "marumie-jp（EDINET）にデータ更新通知を追加",
-          "done": false,
+          "done": true,
           "createdAt": "2026-06-30T03:03:01.879Z"
         },
         {
@@ -249,6 +308,69 @@
           "text": "briefing-bot の現状整理・稼働確認",
           "done": true,
           "createdAt": "2026-06-30T03:03:01.918Z"
+        },
+        {
+          "id": "mr2oqsyz1acn",
+          "text": "onepiece の再起動多発（↺12）の原因調査",
+          "detail": "pm2で他アプリの再起動回数が0〜2回のところ onepiece だけ12回と突出。デプロイ起因なら問題ないが、クラッシュループの兆候がないか pm2 logs onepiece --err とメモリ使用量の推移を確認する。",
+          "done": true,
+          "createdAt": "2026-07-01T23:07:06.923Z"
+        },
+        {
+          "id": "mr3ief2vm833",
+          "text": "daikei_check、次回20:00 JST実行でログイン成功・Cookie保存を確認",
+          "detail": "",
+          "done": false,
+          "createdAt": "2026-07-02T12:57:17.527Z"
+        },
+        {
+          "id": "mr3ief6c6ae9",
+          "text": "daikei_check、N回連続ログイン失敗でDiscord通知するアラート追加",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T12:57:17.652Z"
+        },
+        {
+          "id": "mr3ief6w6avo",
+          "text": "daikei_checkのCookie/ログイン方式見直し（X UI変更に強い構成へ）",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T12:57:17.672Z"
+        },
+        {
+          "id": "mr3ief7wxe30",
+          "text": "daikei_checkのmonitor_log.jsonがgit未追跡、.gitignore整理",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T12:57:17.708Z"
+        },
+        {
+          "id": "mr3ison7gwiz",
+          "text": "diaryの週次まとめをClaudeが自動生成してDiscordに配信",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T13:08:23.107Z"
+        },
+        {
+          "id": "mr3isonsd642",
+          "text": "task-managerに「今日やること3つ」をClaudeが提案するAI秘書ボタン追加",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T13:08:23.128Z"
+        },
+        {
+          "id": "mr3isoodhvmy",
+          "text": "marumie-jpに他国の国家予算比較機能を追加",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T13:08:23.149Z"
+        },
+        {
+          "id": "mr3isop6mssj",
+          "text": "onepieceにファンの次回予想投票機能を追加",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T13:08:23.178Z"
         }
       ]
     },
@@ -267,6 +389,411 @@
           "text": "Obsidian ↔ VPS 連携（メモを自動同期・インデックス化）",
           "done": true,
           "createdAt": "2026-06-30T03:03:02.014Z"
+        },
+        {
+          "id": "mr3isojpt5rw",
+          "text": "ごまの一日ダイジェスト自動生成（Ring映像+行動ログをClaudeで要約してLINE/Discord配信）",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T13:08:22.981Z"
+        },
+        {
+          "id": "mr3isok784ae",
+          "text": "天気予報と連動してごまのお散歩タイミングを提案するアプリ",
+          "detail": "",
+          "done": true,
+          "createdAt": "2026-07-02T13:08:22.999Z"
+        },
+        {
+          "id": "mr3isokr2t6y",
+          "text": "全アプリの稼働状況を一覧表示するステータスダッシュボード作る",
+          "detail": "",
+          "done": false,
+          "createdAt": "2026-07-02T13:08:23.019Z"
+        },
+        {
+          "id": "mr3isoleb93i",
+          "text": "音声メモをDiscordに投げるとClaudeが文字起こし＆タスク化するボット",
+          "detail": "",
+          "done": false,
+          "createdAt": "2026-07-02T13:08:23.042Z"
+        },
+        {
+          "id": "mr3isom1bzzj",
+          "text": "RSSフィードで「推し情報」を自動収集する新しい監視アプリのプロトタイプ",
+          "detail": "",
+          "done": false,
+          "createdAt": "2026-07-02T13:08:23.065Z"
+        },
+        {
+          "id": "mr3isomm01qm",
+          "text": "Claude使用量+diary+task進捗をまとめる週刊レポートアプリ",
+          "detail": "",
+          "done": false,
+          "createdAt": "2026-07-02T13:08:23.086Z"
+        }
+      ]
+    },
+    {
+      "id": "mr1r18cbptjq",
+      "title": "セキュリティ関連🔒",
+      "tasks": [
+        {
+          "id": "mr1r322lwcsj",
+          "text": "[Critical] log-viewer server.js:103 — OSコマンドインジェクション（RCE、実機確認済み）／api/analyze/:app",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.645Z"
+        },
+        {
+          "id": "mr1r322n4krw",
+          "text": "[Critical] log-viewer server.js:152 — OSコマンドインジェクション（RCE、実機確認済み）／api/logs/:app（SSE）",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.647Z"
+        },
+        {
+          "id": "mr1r326dud3q",
+          "text": "[Critical] tmux-discord bot.py:589 — スレッド経由でtmuxに認可チェックなしで任意コマンド送信可能",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.781Z"
+        },
+        {
+          "id": "mr1r326e1ucn",
+          "text": "[Critical] briefing-bot lib/cache.ts:6 — パストラバーサルで任意ファイル書き込み（実機確認済み）",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.782Z"
+        },
+        {
+          "id": "mr1r326fpkzd",
+          "text": "[Critical] daikei_check monitor.yml:48 — state保存が毎回失敗し監視が2日以上機能停止（気づけない設計）",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.783Z"
+        },
+        {
+          "id": "mr1r326f23tr",
+          "text": "[Critical] diary public/index.html:210 — Stored XSS（公開・無認証で誰でも書き込み可）",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.783Z"
+        },
+        {
+          "id": "mr1r326gi32v",
+          "text": "[Critical] obsidian-sync server.js:33 — Vault全体が無認証で公開",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.784Z"
+        },
+        {
+          "id": "mr1r326hl80h",
+          "text": "[Critical] agent-dashboard server.js:1 — 全API無認証、フォルダ構成機能経由でホームディレクトリ構造が閲覧可能",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.785Z"
+        },
+        {
+          "id": "mr1r326iq7zq",
+          "text": "[High] briefing-bot lib/llm/cli.ts:13 — デフォルトモデルがclaude-sonnet-4-6でプロジェクトルール違反",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.786Z"
+        },
+        {
+          "id": "mr1r326iksau",
+          "text": "[High] claude-usage-monitor src/usage.ts:21 — HTTPリクエストにタイムアウトなし、ハングでFD枯渇の恐れ",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.786Z"
+        },
+        {
+          "id": "mr1r326jqkes",
+          "text": "[High] claude-usage-monitor ecosystem.config.cjs:6 — cwdパスが実際の配置場所と不一致、標準手順で再起動失敗",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.787Z"
+        },
+        {
+          "id": "mr1r326kcnki",
+          "text": "[High] company-news-monitor app/sources.py:56 — time.mktime()起因でUTC変換が9時間ずれる",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.788Z"
+        },
+        {
+          "id": "mr1r328y2vfq",
+          "text": "[High] daikei_check scripts/monitor.py:276 — 例外を握りつぶしCI上「成功」に見える",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.874Z"
+        },
+        {
+          "id": "mr1r328z0gw6",
+          "text": "[High] diary server.js:26 — 無認証でPOST/DELETE、誰でも日誌全消去可能",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.875Z"
+        },
+        {
+          "id": "mr1r3290ihbf",
+          "text": "[High] edinet lib/edinet.ts:79 — APIキー設定後も常にモックデータを返し企業詳細ページが404",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.876Z"
+        },
+        {
+          "id": "mr1r32916oj2",
+          "text": "[High] log-viewer public/index.html:630 — ?appクエリ由来の反射型XSS",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.877Z"
+        },
+        {
+          "id": "mr1r3292viky",
+          "text": "[High] log-viewer nginx設定:137 — 認証なしでRCEを公開ドメインに晒している",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.878Z"
+        },
+        {
+          "id": "mr1r3292ueuc",
+          "text": "[High] obsidian-sync public/index.html:189 — marked.parse()結果を無サニタイズでinnerHTML、保存型XSS",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.878Z"
+        },
+        {
+          "id": "mr1r3293666d",
+          "text": "[High] task-manager server.js:1 — 全API無認証",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.879Z"
+        },
+        {
+          "id": "mr1r3294o3ll",
+          "text": "[High] goma-monitor web/router.py:645 — 画像配信のパストラバーサル対策がバイパス可能",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.880Z"
+        },
+        {
+          "id": "mr1r32950b6i",
+          "text": "[Medium] agent-dashboard server.js:57 — POST /api/track が未認証かつ未検証",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.881Z"
+        },
+        {
+          "id": "mr1r329520u5",
+          "text": "[Medium] claude-usage-monitor src/state.ts:41 — 履歴ファイル無制限増加＋同期読み込みでイベントループブロック",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.881Z"
+        },
+        {
+          "id": "mr1r32a4o2zo",
+          "text": "[Medium] company-news-monitor app/sources.py:74 — item_selector省略で通知フラッドの恐れ",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.916Z"
+        },
+        {
+          "id": "mr1r32b76eqx",
+          "text": "[Medium] daikei_check scripts/monitor.py:44 — Cookieが永続化されず毎回フルログイン",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.955Z"
+        },
+        {
+          "id": "mr1r32bbhcn6",
+          "text": "[Medium] diary server.js:13 — entries.jsonの読み書きに競合状態あり",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.959Z"
+        },
+        {
+          "id": "mr1r32bf3h68",
+          "text": "[Medium] edinet lib/edinet.ts:56 — 大量保有報告書が固定値を表示",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.963Z"
+        },
+        {
+          "id": "mr1r32biz0kn",
+          "text": "[Medium] marumie-jp api/admin/refresh/route.ts:40 — データ再生成APIに排他制御がなくJSON破損の恐れ",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.966Z"
+        },
+        {
+          "id": "mr1r32bkal5n",
+          "text": "[Medium] obsidian-sync server.js:23 — HMAC長不一致で500エラー・スタックトレース漏洩",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.968Z"
+        },
+        {
+          "id": "mr1r32bl4qpx",
+          "text": "[Medium] one-piece app/api/quiz/route.ts:16 — 認証・レート制限なしで共有OAuthクォータ枯渇の恐れ",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.969Z"
+        },
+        {
+          "id": "mr1r32bsfv3a",
+          "text": "[Medium] task-manager server.js:29 — 型未検証でTypeError→スタックトレース漏洩",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.976Z"
+        },
+        {
+          "id": "mr1r32btipsw",
+          "text": "[Medium] tmux-discord bot.py:617 — !enter/!keyがキューをバイパスし競合状態",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:51.977Z"
+        },
+        {
+          "id": "mr1r32ct8fa5",
+          "text": "[Low] agent-dashboard server.js:61 — execution-counts.jsonの読み書きに競合状態",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:52.013Z"
+        },
+        {
+          "id": "mr1r32eugejj",
+          "text": "[Low] agent-dashboard public/index.html:1023 — daikeiログURLが未エスケープでhref埋め込み",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:52.086Z"
+        },
+        {
+          "id": "mr1r32ew8mln",
+          "text": "[Low] company-news-monitor monitor.yml:40 — state.json push競合でリトライなし",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:52.088Z"
+        },
+        {
+          "id": "mr1r32ewgi6p",
+          "text": "[Low] daikei_check scripts/monitor.py:73 — 既読ID保持がset順序依存で意図通り動作せず",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:52.088Z"
+        },
+        {
+          "id": "mr1r32ex0eja",
+          "text": "[Low] edinet components/Nav.tsx:55 — DEMOタグが常時ハードコード表示",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:52.089Z"
+        },
+        {
+          "id": "mr1r32ey38vi",
+          "text": "[Low] marumie-jp scripts/build_flows.ts:40 — CSVパーサーがクォート付きフィールド非対応",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:52.090Z"
+        },
+        {
+          "id": "mr1r32eypv20",
+          "text": "[Low] one-piece app/page.tsx:108 — 重複除去後の問題数が黙って不足する",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:52.090Z"
+        },
+        {
+          "id": "mr1r32ez1u79",
+          "text": "[Low] tmux-discord bot.py:108 — ウィンドウ名に\"|\"が含まれると一覧取得が全滅",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:52.091Z"
+        },
+        {
+          "id": "mr1r32f01mya",
+          "text": "[Low] tmux-discord bot.py:269 — JSONLマッチングでスレッド誤配信の恐れ",
+          "done": true,
+          "createdAt": "2026-07-01T07:24:52.092Z"
+        },
+        {
+          "id": "mr2oqsuz44jo",
+          "text": "認証ゲートのカバレッジ再点検（/line-call /daikei /server /claude-status.json が素通し）",
+          "detail": "nginxのcookie+トークンゲートは /tasks /diary /logs /agents /obsidian の5箇所のみ。/line-call（LINE通話通知）や /daikei（監視結果）は私的情報なので保護対象に含めるか判断し、必要なら location にゲートを追加する。marumie/onepiece/briefing は公開アプリとして現状維持でよいか併せて確認。",
+          "done": false,
+          "createdAt": "2026-07-01T23:07:06.779Z"
+        },
+        {
+          "id": "mr2oqswv1nn6",
+          "text": "認証トークンのローテーション手順整備",
+          "detail": "nginxに静的トークンがハードコードされており、漏洩すると保護中の全アプリに入れる単一鍵になっている。ローテーション手順（openssl randで再生成 → nginx設定の一括置換 → reload → 各端末で ?key= 付きURLを開き直しcookie再設定）を文書化し、半年ごと程度の実施を運用に組み込む。",
+          "done": false,
+          "createdAt": "2026-07-01T23:07:06.847Z"
+        },
+        {
+          "id": "mr2oqsygr32q",
+          "text": "監査修正40件の回帰テスト化",
+          "detail": "2026-07の全アプリ監査で修正した40件（コマンドインジェクション、パストラバーサル、XSS等）にテストがなく、今後の変更で静かに再発し得る。勉強📚セクションの「テスト+GitHub Actions CI導入」タスクと統合し、修正済み脆弱性の再現リクエストを題材に回帰テストを書くと学習と実益を兼ねられる。",
+          "done": false,
+          "createdAt": "2026-07-01T23:07:06.904Z"
+        },
+        {
+          "id": "mr2pycq3f8qa",
+          "text": "VPSへの直接アクセス経路を塞ぐ（Cloudflare IP帯限定 or cloudflaredトンネル化）",
+          "detail": "現状パケットフィルタは80/443/22を許可しているだけで、IPを知っている相手はCloudflareを迂回してVPSに直接アクセスできてしまう。対策案: (1) パケットフィルタ/iptablesでCloudflareの公開IP帯（https://www.cloudflare.com/ips/）以外からの80/443着信を拒否する、(2) より堅牢にするならcloudflaredでトンネル化しVPS側の80/443ポート開放自体を不要にする。DNSプロキシ導入(t6)とセットで初めて「VPS IPを隠す」効果が実際に効くため、優先度は中〜高。",
+          "done": true,
+          "createdAt": "2026-07-01T23:40:58.731Z"
+        }
+      ]
+    },
+    {
+      "id": "mr26i15hiepo",
+      "title": "システム開発の勉強📚",
+      "tasks": [
+        {
+          "id": "mr26jd49xh7e",
+          "text": "goma-monitorをSSEでリアルタイム更新化",
+          "detail": "目的: 現在ポーリングで更新しているダッシュボードをServer-Sent Events(SSE)に変更し、サーバー→クライアントのプッシュ型通信を学ぶ。\n\n手順案:\n1. FastAPIで/api/streamのようなSSEエンドポイントを追加(text/event-stream)。\n2. 新しい判定結果が出たらイベントをpublishする仕組みを作る(内部のasyncio.Queueやpub/sub)。\n3. フロント側はEventSourceで接続し、届いたイベントでDOMを差分更新。\n4. 接続断・再接続(Last-Event-ID)のハンドリングを実装する。\n5. nginxのproxy_buffering offなど、SSEに必要な設定を確認する。\n\n学べること: HTTP長時間接続の扱い、プッシュ型UIの実装、再接続設計、nginxとストリーミングの相性。",
+          "done": true,
+          "createdAt": "2026-07-01T14:37:26.697Z"
+        },
+        {
+          "id": "mr26jd4r3jk7",
+          "text": "marumie-jpにRedisキャッシュ層を追加",
+          "detail": "目的: 予算データAPIのレスポンスをキャッシュし、キャッシュ無効化の設計パターンを学ぶ。\n\n手順案:\n1. Next.jsのAPI Route(またはRoute Handler)の前段にRedisキャッシュを挟む。\n2. キー設計(パラメータ込みのキー)、TTLベースの単純キャッシュをまず実装。\n3. データ更新(admin/refresh)時にキャッシュを明示的にinvalidateするイベント駆動方式に発展させる。\n4. キャッシュヒット率やレイテンシの変化をログで比較する。\n5. stale-while-revalidateパターンも試す余裕があれば挑戦。\n\n学べること: TTL vs イベント駆動の使い分け、キャッシュスタンピード対策、キャッシュと一貫性のトレードオフ。",
+          "done": false,
+          "createdAt": "2026-07-01T14:37:26.715Z"
+        },
+        {
+          "id": "mr26jd5a1zyz",
+          "text": "既存アプリ1つにテスト+GitHub Actions CIを導入",
+          "detail": "目的: テストコードとCIパイプラインの基本を体で覚える。goma-monitorかtask-manager等、比較的シンプルなアプリを題材にする。\n\n手順案:\n1. Node系ならVitest/Jest、Python系ならpytestを導入。\n2. まずAPIエンドポイントの正常系・異常系(必須パラメータ欠落など)を数本書く。\n3. .github/workflows/ci.ymlを作成し、push時にlint+testを自動実行。\n4. テスト失敗時にPRやpushがどう見えるかを確認する(赤バッジ体験)。\n5. 余裕があればカバレッジレポートをCIで出力してみる。\n\n学べること: テストピラミッドの考え方、CIでの自動検証、テストが書きにくいコード(グローバル状態・ファイルI/O依存)への気づき。",
+          "done": false,
+          "createdAt": "2026-07-01T14:37:26.734Z"
+        },
+        {
+          "id": "mr26jd5wmg8h",
+          "text": "diaryアプリに簡易RAG検索を実装",
+          "detail": "目的: 埋め込み(embedding)を使った意味検索=RAGの基礎を、身近なデータ(自分の日誌)で体験する。\n\n手順案:\n1. 既存の日誌エントリをAnthropicかローカルのembeddingモデルでベクトル化する(件数が少ないうちは全文embedding→インメモリでOK)。\n2. 単純なコサイン類似度検索を実装し、「あの話どこで書いたっけ」を自然文検索できるようにする。\n3. 検索結果をコンテキストとしてLLM(haiku)に渡し、要約回答させる(Retrieval-Augmented Generation)。\n4. データが増えてきたらベクトルDB(Chroma/Qdrant等)への移行を検討する。\n5. embeddingの再計算タイミング(新規エントリ追加時のみ)を設計する。\n\n学べること: embeddingの概念、類似度検索、RAGパイプラインの全体像、ベクトルDBを使うべきタイミングの判断軸。",
+          "done": true,
+          "createdAt": "2026-07-01T14:37:26.756Z"
+        },
+        {
+          "id": "mr26jd6e7ia6",
+          "text": "nginxで簡易APIゲートウェイを構築",
+          "detail": "目的: 複数アプリに分散しているレート制限・APIキー認証をnginx層に集約し、ゲートウェイパターンを学ぶ。\n\n手順案:\n1. nginxのlimit_req_zoneでIPベースのレート制限を設定し、負荷試験(abやhey)で挙動を確認する。\n2. auth_requestディレクティブか簡易Luaで、共通のAPIキー検証をnginx側に持たせる。\n3. アプリごとに違うポートへの振り分けをlocationで整理し、設定の共通化(map/includeの活用)を試す。\n4. アクセスログのフォーマットを統一し、後述の可観測性タスクと繋げる。\n\n学べること: リバースプロキシ層での横断的関心事(認証・レート制限・ログ)の切り出し方、nginx設定の再利用パターン。",
+          "done": false,
+          "createdAt": "2026-07-01T14:37:26.774Z"
+        },
+        {
+          "id": "mr26jd6wsua2",
+          "text": "PM2のcluster modeでZero-downtimeデプロイを試す",
+          "detail": "目的: 今の`pm2 restart`(瞬断あり)から、無停止デプロイの仕組みへの発展を学ぶ。\n\n手順案:\n1. 対象アプリ(状態を持たないもの、例えばmarumie-jp)をfork modeからcluster modeに変更してみる。\n2. `pm2 reload`コマンドでの無停止再起動を試し、`pm2 restart`との違いをレスポンスタイムの計測で比較する。\n3. graceful shutdown(SIGINTを受けてから接続中のリクエストを終えて終了)をアプリ側に実装する。\n4. 状態を持つアプリ(ファイルI/Oに依存するものなど)ではcluster modeが向かない理由を整理する。\n5. 発展としてblue-green(新旧2プロセスを立てて切り替え)の設計も検討してみる。\n\n学べること: プロセス管理とダウンタイムの関係、graceful shutdownの重要性、ステートレス/ステートフルの設計上の違い。",
+          "done": false,
+          "createdAt": "2026-07-01T14:37:26.792Z"
+        },
+        {
+          "id": "mr26jd7ed0xj",
+          "text": "構造化ログ+簡易可観測性ダッシュボードを構築",
+          "detail": "目的: 障害調査を「テキストログを目grepする」から「構造化データを検索・可視化する」に発展させる。\n\n手順案:\n1. 各アプリのログ出力をJSON形式(timestamp, level, app, message, meta)に統一する。\n2. ログを1箇所(既存のlog-viewerか新規)に集約し、レベル・アプリ名でフィルタできるようにする。\n3. エラー発生時にDiscord webhookへ通知する仕組みを既存のDiscord連携と統合する。\n4. 余裕があればGrafana+Lokiのような軽量な可観測性スタックを試験導入する。\n5. 「このエラーは何が原因でいつから起きているか」を過去ログから追えるかを実際に検証する。\n\n学べること: 構造化ログの設計、ログ集約とアラートの分離、可観測性(observability)の3本柱(ログ・メトリクス・トレース)の基礎。",
+          "done": false,
+          "createdAt": "2026-07-01T14:37:26.810Z"
+        },
+        {
+          "id": "mr26jd7x5umu",
+          "text": "portalかgoma-monitorに認証機構を追加",
+          "detail": "目的: 現状ノーガードで公開されているアプリに、最小限の認証を実装しセキュリティの基本を学ぶ。\n\n手順案:\n1. まずは簡易Basic認証をnginx層で追加し、認証の有無での挙動差を確認する(即効性のある対策)。\n2. その後アプリ側でJWTかセッションCookieベースの認証を実装する(ログインフォーム→トークン発行→ミドルウェアで検証)。\n3. パスワードはハッシュ化(bcrypt等)して保存し、平文保存の危険性を体感する。\n4. 認証が必要なAPIと不要なAPI(ヘルスチェック等)を明確に分離する設計にする。\n5. セキュリティ関連セクションで見つかった「全API無認証」系の指摘と紐づけて優先度を確認する。\n\n学べること: 認証と認可の違い、トークンベース認証の流れ、ミドルウェアパターン、パスワード管理の基本。",
+          "done": true,
+          "createdAt": "2026-07-01T14:37:26.829Z"
+        },
+        {
+          "id": "mr26jd8fyn1e",
+          "text": "1アプリをDockerize(Dockerfile+docker-compose)",
+          "detail": "目的: PM2直運用との比較を通じて、コンテナ化のメリット・デメリットを体感する。\n\n手順案:\n1. 比較的依存が少ないアプリ(task-manager等)を題材に、マルチステージビルドのDockerfileを書く。\n2. 環境変数・ポート・ボリューム(tasks.json等の永続化データ)をdocker-compose.ymlで整理する。\n3. ローカル(またはVPS上)でdocker composeを使い起動確認する。\n4. PM2運用との違い(プロセス管理 vs コンテナ、ログの扱い、再起動ポリシー)を比較検討する。\n5. 余裕があれば他アプリとの依存関係(Redis等)もcompose内に含めてみる。\n\n学べること: コンテナ化による環境差異の吸収、ポータビリティ、PM2とDockerそれぞれの向き不向きの判断軸。",
+          "done": false,
+          "createdAt": "2026-07-01T14:37:26.847Z"
+        },
+        {
+          "id": "mr3iefefgntu",
+          "text": "daikei_checkのログインフローにE2Eスモークテスト追加（UI変更を早期検知）",
+          "detail": "",
+          "done": false,
+          "createdAt": "2026-07-02T12:57:17.943Z"
+        }
+      ]
+    },
+    {
+      "id": "mr2oqawp7rdm",
+      "title": "運用・定例🔁",
+      "tasks": [
+        {
+          "id": "mr2oqsz7xbxc",
+          "text": "タスク管理表の月1棚卸し",
+          "detail": "「テスト」という完了タスク2件や、詳細欄がテストのままのCloudflareタスクなどノイズが混在。月1回、完了ノイズの削除・停滞タスクの継続判断・セクション再編を行う。memory-dream（記憶整理）と同じタイミングで実施すると効率的。",
+          "done": true,
+          "createdAt": "2026-07-01T23:07:06.931Z"
         }
       ]
     }
