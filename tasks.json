@@ -157,18 +157,6 @@
           "createdAt": "2026-06-01T00:00:00Z"
         },
         {
-          "id": "mqzu4101szr9",
-          "text": "テスト",
-          "done": true,
-          "createdAt": "2026-06-29T23:14:03.410Z"
-        },
-        {
-          "id": "mqzuw04ft9h8",
-          "text": "テスト",
-          "done": true,
-          "createdAt": "2026-06-29T23:35:48.639Z"
-        },
-        {
           "id": "mr02ahdwiqo4",
           "text": "claude-usage-monitor にコスト推移グラフを追加（日/週単位）",
           "done": true,
@@ -371,6 +359,41 @@
           "detail": "",
           "done": true,
           "createdAt": "2026-07-02T13:08:23.178Z"
+        },
+        {
+          "id": "hlq-takeprofit-review",
+          "text": "hyperliquid-bot: 利確ロジックの見直し(中心線回帰即決済で含み益を大きく取りこぼす)",
+          "done": true,
+          "createdAt": "2026-07-03T00:00:00Z",
+          "detail": "初の実トレード(BTC LONG, 2026-07-03 09:30エントリー→10:15イグジット)で、保有中最高値との差$18のうち+$0.09しか実現できなかった(ボリンジャーバンド中心線回帰で即イグジットする現行ロジックの弱点)。トレーリングストップや、モメンタムが強い間は中心線到達後も引っ張るロジックへの変更を検討する。diaryの自動振り返り(kind: trade-reflection)で自動指摘された内容。\n\n[2026-07-03 バックテスト結果] トレーリングストップ案(損切り1.0%/トレール0.3%/最大24時間保有)を過去30日BTC 15分足2880本で検証。ベースライン(現行:中心線回帰即イグジット): 67トレード, 勝率71.6%, 合計+6.52%。トレーリングストップ案: 84トレード, 勝率44.0%, 合計+1.84%(うち17件が損切り発動)。現行ロジックの方が明確に優れている。エントリーが局所的な底/RSI売られすぎ圏で発生するため、反転前にさらに小さく下押しする場面が多く、タイトな0.3%トレール/1%損切りだと本格反転前にノイズで刈られてしまう。パラメータ(トレール幅・損切り幅)を緩めれば改善する可能性はあるが未検証。結論: 現状の即イグジット(中心線回帰)を変更する根拠はなし。"
+        },
+        {
+          "id": "hlq-macd-filter",
+          "text": "hyperliquid-bot: エントリー条件にMACDフィルターの追加を検討(過去100トレードで勝率を検証してから)",
+          "done": true,
+          "createdAt": "2026-07-03T00:00:00Z",
+          "detail": "現在Bollinger/RSI逆張り2戦略が稼働中だが、MACD・出来高・funding rateは反省機能内で参考計算しているだけで実際のエントリー判断には使っていない。初トレードでは『MACDヒストグラムが売り優勢のまま逆張りエントリーした』ため結果的に取りこぼしが大きかった。『MACDヒストグラムが-5.0以上(買い方向への改善)の場合のみエントリー許可』というフィルター案が自動生成されたが、コード変更前に過去トレードでの勝率変化のバックテスト検証が必要。\n\n[2026-07-03 バックテスト結果] 過去30日BTC 15分足2880本で検証(state.db/diary非依存の独立スクリプト)。ベースライン: 67トレード, 勝率71.6%, 合計+6.52%。MACDフィルター(ヒストグラム<-5.0を除外)適用: 7トレード(163件除外), 勝率85.7%, 合計-0.13%。勝率は上がるが合計損益は悪化、かつエントリー機会を9割近く削る副作用が大きいため不採用と判断。ただしn=7で統計的信頼性は低い(6勝はいずれも小幅、1敗が-1.74%と大きく全体を押し下げただけの可能性もある)。"
+        },
+        {
+          "id": "hlq-eth-rsi-deployed",
+          "text": "hyperliquid-bot: RSI(ETH)のperiod/oversold/exit_levelを見直し本番反映済み(14/30/50→21/40/55)",
+          "done": true,
+          "createdAt": "2026-07-03T00:00:00Z",
+          "detail": "現行(period=14,oversold=30,exit=50)はETH単独30日バックテストで-2.44%の損失だったことが判明。period=21,oversold=40,exit=55に変更したところ51件・勝率70.6%・合計+20.62%に改善(バックテスト)。Bollinger(BTC)側は独立検証の結果、現行(period=20,std=2.0)の方が変更案より優れていたため据え置き。config.yaml変更後、両銘柄フラットを確認しpm2 restart、正常稼働確認済み(2026-07-03 11:31 JST)。"
+        },
+        {
+          "id": "hlq-aggregate-leverage-fixed",
+          "text": "hyperliquid-bot: 合算レバレッジチェックの穴を修正・本番反映済み",
+          "done": true,
+          "createdAt": "2026-07-03T00:00:00Z",
+          "detail": "risk.evaluate_and_maybe_execute()が新規注文1件単体のnotionalしかmax_leverageと比較しておらず、複数銘柄(Bollinger@BTC+Donchian@SUI/ETH/HYPE)同時保有時に口座全体の合算レバレッジが上限を超えうる穴があった。_aggregate_open_notional()を追加し、他銘柄の現在ポジションnotional(現在価格ベース)+今回の注文notionalの合計がequity×max_leverageを超えないかチェックするよう修正。pytest 3件追加(全45件パス)、実弾ポジション(HYPE long)保有中に安全に再起動・整合性確認済み。【要フォロー】この修正でエントリー数が想定以上に減る場合、position_pct_per_strategyやmax_leverageの見直しが必要。risk_events テーブルの'aggregate_leverage'拒否理由の頻度を数日後に確認すること。"
+        },
+        {
+          "id": "hlq-auditor-role-added",
+          "text": "hlbot-orchestration: 4人目の役割Auditor(自己進化の仕組み自体の日次監査)を追加",
+          "done": true,
+          "createdAt": "2026-07-03T00:00:00Z",
+          "detail": "GitHub/Twitter検索で「戦略成績ではなく仕組み自体を監査するエージェント」の既製品は見つからず自作。5視点(Strategy/Quant, Risk, Execution/API, Data/Backtest, Ops/Observability)でgate.py閾値の妥当性・リスクチェックの抜け漏れ・バックテスト対応範囲・キューの詰まりを1巡目→2巡目→結論の型で日次点検。全データread-only(guard-orchestration.shで強制、書けるのはshared/reports/とshared/audits/のみ)。param_only級の仮説のみfinding_*.jsonとしてAnalystへ申し送り、提案自体は書かない(gate.py/Coderを経由しない)。watcher.shにAUDIT_INTERVAL_H=24hの新規イベントとして組み込み、DRY_RUNテストで疎通確認済み、hlbot-orchestrator再起動して反映。FLOW図(architecture.html)にもAuditorノードを追加。"
         }
       ]
     },
@@ -736,8 +759,8 @@
         {
           "id": "mr26jd5wmg8h",
           "text": "diaryアプリに簡易RAG検索を実装",
-          "detail": "目的: 埋め込み(embedding)を使った意味検索=RAGの基礎を、身近なデータ(自分の日誌)で体験する。\n\n手順案:\n1. 既存の日誌エントリをAnthropicかローカルのembeddingモデルでベクトル化する(件数が少ないうちは全文embedding→インメモリでOK)。\n2. 単純なコサイン類似度検索を実装し、「あの話どこで書いたっけ」を自然文検索できるようにする。\n3. 検索結果をコンテキストとしてLLM(haiku)に渡し、要約回答させる(Retrieval-Augmented Generation)。\n4. データが増えてきたらベクトルDB(Chroma/Qdrant等)への移行を検討する。\n5. embeddingの再計算タイミング(新規エントリ追加時のみ)を設計する。\n\n学べること: embeddingの概念、類似度検索、RAGパイプラインの全体像、ベクトルDBを使うべきタイミングの判断軸。",
-          "done": true,
+          "detail": "目的: 埋め込み(embedding)を使った意味検索=RAGの基礎を、身近なデータ(自分の日誌)で体験する。\n\n手順案:\n1. 既存の日誌エントリをAnthropicかローカルのembeddingモデルでベクトル化する(件数が少ないうちは全文embedding→インメモリでOK)。\n2. 単純なコサイン類似度検索を実装し、「あの話どこで書いたっけ」を自然文検索できるようにする。\n3. 検索結果をコンテキストとしてLLM(haiku)に渡し、要約回答させる(Retrieval-Augmented Generation)。\n4. データが増えてきたらベクトルDB(Chroma/Qdrant等)への移行を検討する。\n5. embeddingの再計算タイミング(新規エントリ追加時のみ)を設計する。\n\n学べること: embeddingの概念、類似度検索、RAGパイプラインの全体像、ベクトルDBを使うべきタイミングの判断軸。\n\n[2026-07-03 再調査] diaryのコード・git全履歴を確認したが、RAG/embedding/コサイン類似度の実装は存在しないことを確認（該当実装はbriefing-botという別アプリのみに存在）。doneを誤りと判断しfalseに修正。",
+          "done": false,
           "createdAt": "2026-07-01T14:37:26.756Z"
         },
         {
